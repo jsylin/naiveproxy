@@ -1,0 +1,42 @@
+{
+  "apps": {
+    "http": {
+      "servers": {
+        "srv0": {
+          "listen": [":443"],
+          "routes": [{
+            "handle": [{
+              "handler": "forward_proxy",
+              "hide_ip": true,
+              "hide_via": true,
+              "auth_user": "你的用户名", 
+              "auth_pass": "你的密码",
+              "probe_resistance": {"domain": "your-secret-link.localhost"}
+            }]
+          }, {
+            "match": [{"host": ["你的网址"]}],
+            "handle": [{
+              "handler": "file_server",
+              "root": "/web/naive"
+            }],
+            "terminal": true
+          }],
+          "tls_connection_policies": [{
+            "match": {"sni": ["你的网址"]}
+          }]
+        }
+      }
+    },
+    "tls": {
+      "automation": {
+        "policies": [{
+          "subjects": ["你的网址"],
+          "issuer": {
+            "email": "你的电子邮箱",
+            "module": "acme"
+          }
+        }]
+      }
+    }
+  }
+}
