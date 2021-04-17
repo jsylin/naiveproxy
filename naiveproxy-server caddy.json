@@ -1,3 +1,4 @@
+###配合nginx的SNI分流
 {
     "admin": {
         "disabled": true
